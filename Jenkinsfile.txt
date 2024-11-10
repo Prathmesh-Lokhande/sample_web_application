@@ -8,12 +8,14 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                // Cloning the repository
                 git branch: 'main', url: 'https://github.com/Prathmesh-Lokhande/sample_web_application.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
+                // Installing npm dependencies
                 sh 'npm install'
             }
         }
@@ -21,6 +23,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
+                // Running tests if any are defined
                 sh 'npm test || echo "No tests defined"'
             }
         }
@@ -28,7 +31,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                sh 'nohup npm start &'
+                // Starting the application in the background and disowning it
+                sh 'nohup npm start & disown'
             }
         }
     }
